@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="40" viewBox="0 0 180 40">
+  <!-- Shopping Cart Icon -->
+  <g transform="scale(1.2) translate(0, 2)">
+    <path d="M3 3h2l2.4 6h13.2a1 1 0 0 1 .95 1.3l-1.6 5.4a1 1 0 0 1-.95.7H7.1" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    <circle cx="9" cy="26" r="1.5" fill="#4CAF50"></circle>
+    <circle cx="18" cy="26" r="1.5" fill="#4CAF50"></circle>
+  </g>
+
+  <!-- Text "Asbeza" -->
+  <text x="45" y="28" font-family="Arial, sans-serif" font-size="20" fill="#333" font-weight="bold">
+    Asbeza
+  </text>
+</svg>
