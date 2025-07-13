@@ -21,6 +21,29 @@ export const AppContextProvider = ({ children }) => {
 
   const [searchQuery, setSearchQuery] = useState({});
 
+  //get cart items count
+
+  const getCartCount = () => {
+    let totalCount = 0;
+    for (const item in cartItems) {
+      totalCount += cartItems[item];
+    }
+    return totalCount;
+  };
+
+  //get cart total amount
+
+  const getCartAmount = () => {
+    let totalAmount = 0;
+    for (const items in cartItems) {
+      let itemInfo = products.find((product) => product._id === items);
+      if (cartItems[items] > 0) {
+        totalAmount += itemInfo.offerPrice * cartItems[items];
+      }
+    }
+    return Math.floor(totalAmount * 100) / 100;
+  };
+
   // 4. Load products (in real app, you'd use fetch/axios)
   const fetchProducts = async () => {
     setProducts(dummyProducts);
@@ -93,6 +116,8 @@ export const AppContextProvider = ({ children }) => {
     setCurrency,
     searchQuery,
     setSearchQuery,
+    getCartAmount,
+    getCartCount,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
