@@ -12,14 +12,14 @@ export const sellerLogin = async (req, res) => {
       const token = jwt.sign({ email }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
-      res.cookie("token", token, {
+      res.cookie("sellerToken", token, {
         httpOnly: true,
         seecure: process.env.NODE_ENV === "production", //use secure cookie in production
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", //csrf protection
         maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiration time
       });
 
-      returnres.json({ success: true, message: "Logged out" });
+      return res.json({ success: true, message: "Logged in" });
     } else {
       return res.json({ success: false, message: "invalid credentials" });
     }
