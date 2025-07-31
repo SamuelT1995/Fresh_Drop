@@ -60,6 +60,20 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
+  //fetch user Auth status, user data and cart items
+
+  const fetchUser = async () => {
+    try {
+      const { data } = await axios.get("/api/user/is-auth");
+      if (data.success) {
+        setUser(data.user);
+        setCartItems(data.user.cartItems);
+      }
+    } catch (error) {
+      setUser(null);
+    }
+  };
+
   // 4. Load products (in real app, you'd use fetch/axios)
   const fetchProducts = async () => {
     try {
@@ -120,9 +134,27 @@ export const AppContextProvider = ({ children }) => {
 
   // 8. Load products when the app starts
   useEffect(() => {
+    fetchUser();
     fetchSeller();
     fetchProducts();
   }, []);
+  //update database cart items
+  useEffect(() => {
+    const updateCart = async () => {
+      try {
+        const { data } = await axios("/api/cart/update", { cartItems });
+        if (!data.success) {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    if (user) {
+      updateCart();
+    }
+  }, [cartItems]);
 
   // 9. Shared context value
   const value = {
@@ -146,6 +178,7 @@ export const AppContextProvider = ({ children }) => {
     getCartCount,
     axios,
     fetchProducts,
+    setCartItems,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

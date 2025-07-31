@@ -1,10 +1,11 @@
 //update user cart data: /api/cart/update
 
-import User from "../../models/User.js";
+import User from "../../models/user.js";
 
 export const updateCart = async (req, res) => {
   try {
-    const { userId, cartItems } = req.body;
+    const { userId } = req.body;
+    const { cartItems } = req.body;
     await User.findByIdAndUpdate(userId, { cartItems });
     res.json({ success: true, message: "cart updated" });
   } catch (error) {
