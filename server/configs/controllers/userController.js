@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../../models/user.js";
+import User from "../../models/User.js";
 
 // A helper function for setting the cookie to avoid repetition and typos
 const sendTokenResponse = (res, user, message) => {
