@@ -1,14 +1,24 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    cartItems: { type: Object, default: {} },
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  { minimize: false }
-);
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  cartItems: {
+    type: Object,
+    default: {},
+  },
+}, { minimize: false });
 
 const User = mongoose.models.user || mongoose.model("user", userSchema);
 
