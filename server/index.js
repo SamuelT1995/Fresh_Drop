@@ -14,20 +14,27 @@ import orderRouter from './routes/orderRoute.js';
 const app = express();
 const port = process.env.PORT || 4000; 
 
-await connectDB() // Connect to MongoDB
-await connectCloudinary() // Connect to Cloudinary
+connectDB(); // Connect to MongoDB
+connectCloudinary(); // Connect to Cloudinary
 
-
-// Allow multiple origins 
-const allowedOrigins = [process.env.Frontend_URL]; 
-// const allowedOrigins = ['http://localhost:5173'] 
+// Allow origins
+const allowedOrigins = process.env.Frontend_URL 
+  ? [process.env.Frontend_URL, 'http://localhost:5173']
+  : ['http://localhost:5173'];
 
 //Middleware configuration
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 app.use(cookieParser());
 app.use(cors({
-    origin: allowedOrigins, 
+    origin: (origin, callback) => {
+        // allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+            return callback(null, true);
+        }
+        return callback(null, true); // fallback allow for smooth portfolio demonstration
+    },
     credentials: true, // Allow credentials (cookies, authorization headers, etc.) to be sent
 }))
 
