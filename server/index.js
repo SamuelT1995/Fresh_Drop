@@ -17,26 +17,16 @@ const port = process.env.PORT || 4000;
 connectDB(); // Connect to MongoDB
 connectCloudinary(); // Connect to Cloudinary
 
-// Allow origins
-const allowedOrigins = process.env.Frontend_URL 
-  ? [process.env.Frontend_URL, 'http://localhost:5173']
-  : ['http://localhost:5173'];
-
 //Middleware configuration
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 app.use(cookieParser());
 app.use(cors({
-    origin: (origin, callback) => {
-        // allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-            return callback(null, true);
-        }
-        return callback(null, true); // fallback allow for smooth portfolio demonstration
-    },
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.) to be sent
-}))
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+}));
 
 app.get('/', (req, res) => {
   res.send('API is running...');
