@@ -17,24 +17,23 @@ const port = process.env.PORT || 4000;
 connectDB(); // Connect to MongoDB
 connectCloudinary(); // Connect to Cloudinary
 
-//Middleware configuration
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
-app.use(cookieParser());
-// Custom CORS middleware to guarantee credential support without wildcard '*'
+// 1. Custom CORS middleware FIRST (before any body parsers)
 app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (origin) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
+    const origin = req.headers.origin || 'https://fresh-drop-fe.vercel.app';
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, token');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, token, X-Requested-With');
     if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
+        return res.status(200).end();
     }
     next();
 });
+
+// 2. Middleware configuration
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.send('API is running...');
