@@ -6,7 +6,8 @@ import axios from "axios";
 
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL || "";
+const rawBackendUrl = import.meta.env.VITE_BACKEND_URL || "";
+axios.defaults.baseURL = rawBackendUrl.endsWith('/') ? rawBackendUrl.slice(0, -1) : rawBackendUrl;
 
 export const AppContext = createContext();
 
