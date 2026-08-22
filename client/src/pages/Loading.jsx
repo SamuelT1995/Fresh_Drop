@@ -7,13 +7,13 @@ const Loading = () => {
     const {navigate} = useAppContext()
     let {search} = useLocation()
     const params = new URLSearchParams(search)
-    const nextUrl = query.get('next')
+    const nextUrl = params.get('next')
 
     useEffect(() => {
         if (nextUrl) {
-            navigate(setTimeout(() => {
+            setTimeout(() => {
                 navigate(`/${nextUrl}`)
-            }, 5000))
+            }, 5000)
         }
     }, [nextUrl])
 
