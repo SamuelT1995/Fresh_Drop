@@ -1,8 +1,8 @@
+import 'dotenv/config'; // Import dotenv to load environment variables
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
 import connectDB from './configs/db.js'; // Import the database connection function
-import 'dotenv/config'; // Import dotenv to load environment variables
 import userRouter from './routes/userRoute.js'; // Import the user router
 import sellerRoute from './routes/sellerRoute.js';
 import connectCloudinary from './configs/cloudinary.js';
